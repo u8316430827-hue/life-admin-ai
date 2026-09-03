@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Life Admin AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f6fa;color:#171923;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{max-width:720px;margin:auto;padding:24px 16px 48px}.hero{text-align:center;padding:24px 8px 18px}.logo{margin:auto;width:58px;height:58px;border-radius:17px;background:#5b5cf0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;box-shadow:0 10px 25px rgba(91,92,240,.2)}h1{font-size:32px;letter-spacing:-1px;margin:14px 0 7px}.hero p{color:#69707d;margin:0;line-height:1.5}.card{background:#fff;border:1px solid #e4e6ec;border-radius:20px;padding:20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,.05)}label{font-weight:700;display:block;margin-bottom:9px}textarea{display:block;width:100%;height:135px;border:1px solid #d9dce5;border-radius:14px;padding:14px;font:inherit;font-size:16px;resize:none;outline:none}textarea:focus{border-color:#5b5cf0;box-shadow:0 0 0 3px rgba(91,92,240,.12)}button{font:inherit;font-weight:700;border:0;border-radius:13px;padding:14px 16px;cursor:pointer;transition:transform .15s,opacity .15s}button:active{transform:scale(.98)}button:disabled{opacity:.55;cursor:not-allowed}.main{width:100%;margin-top:12px;background:#5b5cf0;color:white}.main.loading{opacity:.8}.quickgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.quick{background:#f8f8fb;border:1px solid #e4e6ec;text-align:left;color:#343945}.quick:hover{background:#f0f1f8}.result{display:none}.result.show{display:block}.result h2{margin:0 0 14px}.box{background:#f8f8fb;border-radius:14px;padding:14px;margin:10px 0}.box b{display:block;margin-bottom:7px}.box p{margin:0;white-space:pre-line;line-height:1.55;color:#414754}.box ul{margin:0;padding-left:22px;line-height:1.7;color:#414754}.actions{display:flex;gap:9px;margin-top:12px}.secondary{background:#eef0ff;color:#4142b9;flex:1}.saved{display:none}.saved.show{display:block}.saved h2{margin:0 0 6px}.saved-intro{color:#69707d;font-size:14px;margin:0 0 14px}.saved-list{display:grid;gap:9px}.saved-item{border:1px solid #e4e6ec;border-radius:14px;padding:13px;background:#fafafe}.saved-item-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.saved-item-title{font-weight:700;line-height:1.35}.saved-item-date{font-size:12px;color:#858b97;margin-top:4px}.saved-actions{display:flex;gap:7px;margin-top:10px}.tiny{padding:9px 11px;font-size:13px;background:#eef0ff;color:#4142b9}.danger{background:#fff0f0;color:#a63d3d}.empty{padding:16px;border-radius:14px;background:#f8f8fb;color:#69707d;text-align:center;font-size:14px}.premium{background:#171923;color:#fff;position:relative;overflow:hidden}.premium:before{content:"PREMIUM";position:absolute;top:16px;right:16px;font-size:11px;font-weight:800;letter-spacing:1px;background:#3a3b46;color:#fff;padding:6px 9px;border-radius:999px}.premium h2{margin:0 0 8px}.premium p{color:#d6d8df;line-height:1.5;margin:0 0 14px}.premium ul{margin:0 0 18px;padding-left:20px;color:#ececf1;line-height:1.8}.premium a{display:block;text-align:center;text-decoration:none;background:#fff;color:#171923;font:inherit;font-weight:800;border-radius:13px;padding:14px 16px;cursor:pointer;transition:transform .15s,opacity .15s}.premium a:active{transform:scale(.98);opacity:.9}.premium-note{font-size:12px;color:#aeb1ba;margin-top:10px!important;text-align:center}.note{font-size:12px;color:#7a808c;text-align:center;margin:18px 0 0;line-height:1.4}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#171923;color:#fff;padding:12px 16px;border-radius:999px;font-size:14px;font-weight:700;opacity:0;pointer-events:none;transition:.22s;z-index:20;box-shadow:0 8px 25px rgba(0,0,0,.18)}.toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:480px){h1{font-size:28px}.quickgrid{grid-template-columns:1fr}.actions{flex-direction:column}.saved-item-top{flex-direction:column}.saved-actions{width:100%}.saved-actions button{flex:1}}
+</style>
+</head>
+<body>
+<main class="app">
+<section class="hero"><div class="logo">L</div><h1>Life Admin AI</h1><p>Tell me what you need to get done. I'll turn it into simple next steps.</p></section>
+
+<section class="card">
+<label for="task">What do you need to get done?</label>
+<textarea id="task" placeholder="Example: I want to cancel my gym membership and make sure they don't charge me again."></textarea>
+<button class="main" id="createBtn">Create my plan →</button>
+<div class="quickgrid">
+<button class="quick" data-text="I want to cancel my gym membership and make sure they don't charge me again.">Cancel a subscription</button>
+<button class="quick" data-text="I bought something and want to ask the company for a refund.">Ask for a refund</button>
+<button class="quick" data-text="I want to make a complaint about poor customer service.">Make a complaint</button>
+<button class="quick" data-text="I'm moving house and need to organise everything.">Moving house</button>
+</div>
+</section>
+
+<section class="card result" id="result" aria-live="polite">
+<h2>Your plan ✨</h2>
+<div class="box"><b>1. Your first step</b><p id="first"></p></div>
+<div class="box"><b>2. Ready-to-send message</b><p id="message"></p></div>
+<div class="box"><b>3. Checklist</b><ul id="checklist"></ul></div>
+<div class="box"><b>4. Follow-up</b><p id="follow"></p></div>
+<div class="actions"><button class="secondary" id="copyBtn">Copy message</button><button class="secondary" id="saveBtn">Save task</button></div>
+</section>
+
+<section class="card saved" id="savedSection">
+<h2>Saved tasks</h2><p class="saved-intro">Your saved tasks stay on this device.</p>
+<div id="savedList" class="saved-list"></div>
+</section>
+
+<section class="card premium">
+<h2>Life Admin AI Premium</h2>
+<p>Get more done with extra tools designed to make everyday admin easier.</p>
+<ul><li>Unlimited planning sessions</li><li>Extra life-admin templates</li><li>Unlimited saved tasks on your device</li><li>Priority features as they launch</li></ul>
+<a id="premiumBtn" href="https://revolut.me/leecotter" target="_blank" rel="noopener">Get Premium — €5.99</a>
+<p class="premium-note">Payments currently open Revolut. Premium access is managed manually.</p>
+</section>
+
+<p class="note">Plans work offline. Saved tasks are stored locally on this device.</p>
+</main>
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+(function(){
+  const task=document.getElementById('task'),result=document.getElementById('result'),first=document.getElementById('first'),message=document.getElementById('message'),checklist=document.getElementById('checklist'),follow=document.getElementById('follow');
+  const createBtn=document.getElementById('createBtn'),copyBtn=document.getElementById('copyBtn'),saveBtn=document.getElementById('saveBtn'),savedSection=document.getElementById('savedSection'),savedList=document.getElementById('savedList'),toast=document.getElementById('toast');
+  let currentPlan=null,toastTimer=null;
+
+  const templates={
+    cancel:{first:"Find the company's cancellation option and check whether there is a notice period or final charge.",message:"Subject: Cancellation request\n\nHello,\n\nI would like to cancel my membership/subscription as soon as permitted under my agreement. Please confirm in writing that the cancellation has been processed and that no further recurring charges will be taken.\n\nThank you.",list:["Submit the cancellation request","Save a screenshot or copy","Check your bank/card for future charges","Keep the confirmation"],follow:"If you don't receive confirmation within 3–5 business days, contact the company again and mention the date of your original request."},
+    refund:{first:"Find your receipt, order number, purchase date and the reason you are requesting the refund.",message:"Subject: Refund request\n\nHello,\n\nI am contacting you regarding my recent purchase. I would like to request a refund. My order/reference number is [NUMBER]. Please confirm the next steps and when I should expect the refund.\n\nThank you.",list:["Find your receipt/order number","Send the refund request","Save the response","Check when the refund is due"],follow:"If you don't get a response after a reasonable period, send a follow-up with the original request date and reference number."},
+    complaint:{first:"Write down what happened, when it happened, who you contacted and what outcome you want.",message:"Subject: Formal complaint\n\nHello,\n\nI am writing to make a formal complaint regarding the service I received. The issue occurred on [DATE] and the relevant reference/order number is [NUMBER]. I would like this matter reviewed and would appreciate a written response explaining how it will be resolved.\n\nThank you.",list:["Gather your evidence","Send the complaint through the official channel","Keep copies of everything","Note any response deadline"],follow:"If the company does not respond, use its escalation or complaints process and keep your original correspondence."},
+    moving:{first:"Start one master checklist and work backwards from your moving date.",message:"Hello,\n\nI am moving and need to update my address/details on my account. My new address is [ADDRESS] and my move date is [DATE]. Please let me know if you need any additional information.\n\nThank you.",list:["Confirm your moving date","Arrange utilities/internet","Update important accounts","Organise transport and keys","Keep essential documents together"],follow:"Review the checklist one week before the move and again after moving."},
+    generic:{first:"Break the task into the smallest useful next action and gather the information or documents you need.",message:"Hello,\n\nI am contacting you regarding [TOPIC]. Please could you let me know the next steps and confirm what information you need from me?\n\nThank you.",list:["Decide the outcome you want","Gather relevant documents","Send the request","Save the response"],follow:"Set a reminder to check progress if you haven't received a response within the timeframe you were given."}
+  };
+
+  function showToast(text){clearTimeout(toastTimer);toast.textContent=text;toast.classList.add('show');toastTimer=setTimeout(()=>toast.classList.remove('show'),2200)}
+  function getTemplate(t){if(/cancel|subscription|membership/i.test(t))return templates.cancel;if(/refund|money back|return/i.test(t))return templates.refund;if(/complaint|poor service|bad service/i.test(t))return templates.complaint;if(/moving|move house/i.test(t))return templates.moving;return templates.generic}
+  function makePlan(){
+    const t=task.value.trim();if(!t){showToast('Type what you need to get done first.');task.focus();return}
+    createBtn.disabled=true;createBtn.classList.add('loading');createBtn.textContent='Creating your plan…';
+    setTimeout(()=>{
+      const d=getTemplate(t);currentPlan={task:t,...d};first.textContent=d.first;message.textContent=d.message;follow.textContent=d.follow;checklist.innerHTML=d.list.map(x=>'<li>'+x+'</li>').join('');result.classList.add('show');createBtn.disabled=false;createBtn.classList.remove('loading');createBtn.textContent='Create my plan →';showToast('Plan created ✨');result.scrollIntoView({behavior:'smooth',block:'start'});
+    },300);
+  }
+  async function copyMessage(){
+    if(!currentPlan){showToast('Create a plan first.');return}
+    const text=message.textContent;
+    try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove()}showToast('Message copied ✓');}
+    catch(e){showToast('Copy was blocked — select the message manually.');}
+  }
+  function readSaved(){try{return JSON.parse(localStorage.getItem('lifeAdminSavedTasks')||'[]')}catch(e){return[]}}
+  function writeSaved(items){try{localStorage.setItem('lifeAdminSavedTasks',JSON.stringify(items));return true}catch(e){return false}}
+  function saveTask(){
+    if(!currentPlan){showToast('Create a plan before saving it.');return}
+    const items=readSaved();items.unshift({id:Date.now(),task:currentPlan.task,plan:currentPlan,savedAt:new Date().toISOString()});if(items.length>25)items.length=25;
+    if(writeSaved(items)){renderSaved();showToast('Task saved ✓')}else showToast('Could not save on this device.');
+  }
+  function renderSaved(){
+    const items=readSaved();savedSection.classList.toggle('show',items.length>0);
+    if(!items.length){savedList.innerHTML='';return}
+    savedList.innerHTML=items.map(item=>`<div class="saved-item"><div class="saved-item-top"><div><div class="saved-item-title">${escapeHtml(item.task)}</div><div class="saved-item-date">Saved ${new Date(item.savedAt).toLocaleString()}</div></div></div><div class="saved-actions"><button class="tiny" data-load="${item.id}">Open plan</button><button class="tiny danger" data-delete="${item.id}">Delete</button></div></div>`).join('');
+  }
+  function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+  function openSaved(id){const item=readSaved().find(x=>x.id===id);if(!item)return;currentPlan=item.plan;task.value=item.plan.task;first.textContent=item.plan.first;message.textContent=item.plan.message;follow.textContent=item.plan.follow;checklist.innerHTML=item.plan.list.map(x=>'<li>'+x+'</li>').join('');result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'start'});showToast('Saved plan opened');}
+  function deleteSaved(id){const items=readSaved().filter(x=>x.id!==id);writeSaved(items);renderSaved();showToast('Saved task deleted');}
+
+  createBtn.addEventListener('click',makePlan);task.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='Enter')makePlan()});
+  document.querySelectorAll('.quick').forEach(b=>b.addEventListener('click',()=>{task.value=b.dataset.text;makePlan()}));
+  copyBtn.addEventListener('click',copyMessage);saveBtn.addEventListener('click',saveTask);
+  savedList.addEventListener('click',e=>{const load=e.target.closest('[data-load]'),del=e.target.closest('[data-delete]');if(load)openSaved(Number(load.dataset.load));if(del)deleteSaved(Number(del.dataset.delete))});
+  task.addEventListener('input',()=>{if(task.value.trim().length===0)result.classList.remove('show')});
+  renderSaved();
+})();
+</script>
+</body>
+</html>
